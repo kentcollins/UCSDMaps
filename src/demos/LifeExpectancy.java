@@ -22,6 +22,7 @@ import de.fhpotsdam.unfolding.marker.Marker;
  * another CSV file (provided by the World Bank). The data value is encoded to transparency via a simplistic linear
  * mapping.
  */
+@SuppressWarnings("serial")
 public class LifeExpectancy extends PApplet {
 
 	UnfoldingMap map;
@@ -35,12 +36,12 @@ public class LifeExpectancy extends PApplet {
 		MapUtils.createDefaultEventDispatcher(this, map);
 
 		// Load lifeExpectancy data
-		lifeExpMap = loadLifeExpectancyFromCSV("LifeExpectancyWorldBankModule3.csv");
+		lifeExpMap = loadLifeExpectancyFromCSV("../data/LifeExpectancyWorldBankModule3.csv");
 		println("Loaded " + lifeExpMap.size() + " data entries");
 		
 
 		// Load country polygons and adds them as markers
-		countries = GeoJSONReader.loadData(this, "countries.geo.json");
+		countries = GeoJSONReader.loadData(this, "../data/countries.geo.json");
 		countryMarkers = MapUtils.createSimpleMarkers(countries);
 		map.addMarkers(countryMarkers);
 		
