@@ -2,6 +2,7 @@ package module4;
 
 import de.fhpotsdam.unfolding.data.PointFeature;
 import de.fhpotsdam.unfolding.marker.SimplePointMarker;
+import processing.core.PConstants;
 import processing.core.PGraphics;
 
 /** Implements a visual marker for earthquakes on an earthquake map
@@ -63,9 +64,16 @@ public abstract class EarthquakeMarker extends SimplePointMarker
 		
 		// call abstract method implemented in child class to draw marker shape
 		drawEarthquake(pg, x, y);
+
 		
 		// OPTIONAL TODO: draw X over marker if within past day		
-		
+		String age = this.getStringProperty("age");
+		if (age!=null && age.equals("Past Day")){
+			pg.textSize(12);
+			pg.textAlign(PConstants.CENTER);
+			pg.fill(0);
+			pg.text("X", x, y);
+		}
 		// reset to previous styling
 		pg.popStyle();
 		
@@ -76,7 +84,9 @@ public abstract class EarthquakeMarker extends SimplePointMarker
 	// But this is up to you, of course.
 	// You might find the getters below helpful.
 	private void colorDetermine(PGraphics pg) {
-		//TODO: Implement this method
+		if (getDepth()>this.THRESHOLD_DEEP) pg.fill(255, 0, 0);
+		else if (getDepth()>this.THRESHOLD_INTERMEDIATE) pg.fill(0, 0, 255);
+		else pg.fill(255, 255, 0);
 	}
 	
 	
