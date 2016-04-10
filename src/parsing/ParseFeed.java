@@ -271,10 +271,35 @@ public class ParseFeed {
 					break;
 				}
 			}
-			
+		
 		}
 
 		return lifeExpMap;
+	}
+	
+	/** Loads sequential, annual numerical data from World Bank CSV data file.
+	 * 
+	 * @param p the PApplet doing the loading
+	 * @param file the name of the file to parse; for example, http://data.worldbank.org/indicators
+	 * @param code the identifier assigned a category of information, ie. NY.GDP.MKTP.KD.ZG
+	 * @return Hash of country code -> List of values, ordered by year
+	 */
+	public static HashMap<String, List<Float>> loadTimeSeriesFromCSV(PApplet p, String file, String code){
+		HashMap<String, List<Float>> data = new HashMap<String, List<Float>>();
+		String[] rows = p.loadStrings(file);
+		for (String row : rows) {
+			String[] columns = row.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+			if (columns.length>=4 && columns[1].equals(code)) { // only process the code of interest
+				List<Float> yearlies = new ArrayList<Float>();
+				for (int col = 4; col<columns.length; col++) {
+					if (!columns[col].equals("..")) {
+					yearlies.add(Float.parseFloat(columns[col]));
+					} else yearlies.add(null);
+				}
+				data.put(columns[3], yearlies); // associate list with a country code
+			}
+		}
+		return data;
 	}
 	
 	

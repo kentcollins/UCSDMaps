@@ -36,11 +36,11 @@ public class LifeExpectancy extends PApplet {
 		MapUtils.createDefaultEventDispatcher(this, map);
 
 		// Load lifeExpectancy data
-		lifeExpMap = ParseFeed.loadLifeExpectancyFromCSV(this,"LifeExpectancyWorldBank.csv");
+		lifeExpMap = ParseFeed.loadLifeExpectancyFromCSV(this,"../data/LifeExpectancyWorldBank.csv");
 		
 
 		// Load country polygons and adds them as markers
-		countries = GeoJSONReader.loadData(this, "countries.geo.json");
+		countries = GeoJSONReader.loadData(this, "../data/countries.geo.json");
 		countryMarkers = MapUtils.createSimpleMarkers(countries);
 		map.addMarkers(countryMarkers);
 		System.out.println(countryMarkers.get(0).getId());

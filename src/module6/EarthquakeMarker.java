@@ -10,7 +10,7 @@ import processing.core.PGraphics;
  *
  */
 // TODO: Implement the comparable interface
-public abstract class EarthquakeMarker extends CommonMarker
+public abstract class EarthquakeMarker extends CommonMarker implements Comparable<EarthquakeMarker>
 {
 	
 	// Did the earthquake occur on land?  This will be set by the subclasses.
@@ -42,6 +42,14 @@ public abstract class EarthquakeMarker extends CommonMarker
 	// abstract method implemented in derived classes
 	public abstract void drawEarthquake(PGraphics pg, float x, float y);
 		
+	@Override
+	public int compareTo(EarthquakeMarker other) {
+		float diff = this.getMagnitude() - other.getMagnitude();
+		int delta = (int) (diff*1000);
+		if (delta >0) return -1;
+		else if (delta < 0) return 1;
+		else return 0;
+	}
 	
 	// constructor
 	public EarthquakeMarker (PointFeature feature) 
@@ -54,9 +62,6 @@ public abstract class EarthquakeMarker extends CommonMarker
 		setProperties(properties);
 		this.radius = 1.75f*getMagnitude();
 	}
-	
-	// TODO: Add the method:
-	// public int compareTo(EarthquakeMarker marker)
 	
 	
 	// calls abstract method drawEarthquake and then checks age and draws X if needed

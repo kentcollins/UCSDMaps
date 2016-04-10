@@ -2,6 +2,7 @@ package module6;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import de.fhpotsdam.unfolding.UnfoldingMap;
@@ -47,8 +48,8 @@ public class EarthquakeCityMap extends PApplet {
 	private String earthquakesURL = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.atom";
 	
 	// The files containing city names and info and country names and info
-	private String cityFile = "city-data.json";
-	private String countryFile = "countries.geo.json";
+	private String cityFile = "../data/city-data.json";
+	private String countryFile = "../data/countries.geo.json";
 	
 	// The map
 	private UnfoldingMap map;
@@ -85,7 +86,7 @@ public class EarthquakeCityMap extends PApplet {
 		//earthquakesURL = "test2.atom";
 		
 		// Uncomment this line to take the quiz
-		//earthquakesURL = "quiz2.atom";
+		earthquakesURL = "../data/quiz2.atom";
 		
 		
 		// (2) Reading in earthquake data and geometric properties
@@ -123,6 +124,9 @@ public class EarthquakeCityMap extends PApplet {
 	    //           for their geometric properties
 	    map.addMarkers(quakeMarkers);
 	    map.addMarkers(cityMarkers);
+	    
+	    sortAndPrint(5);
+	    sortAndPrint(1000);
 	    
 	    
 	}  // End setup
@@ -173,6 +177,15 @@ public class EarthquakeCityMap extends PApplet {
 				marker.setSelected(true);
 				return;
 			}
+		}
+	}
+	
+	private void sortAndPrint(int numToPrint){
+		Object[] quakes = quakeMarkers.toArray();
+		Arrays.sort(quakes);
+		System.out.println("Top "+numToPrint+" of "+quakes.length+" quakes:");
+		for (int i = 0; i<quakes.length && i<numToPrint; i++) {
+			System.out.println(quakes[i]);
 		}
 	}
 	
